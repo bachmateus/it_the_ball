@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Animated, StyleSheet, Dimensions, Text, View,TouchableOpacity } from 'react-native';
+import { Animated, StyleSheet, Dimensions, View, } from 'react-native';
 
 import TheBall from '../../components/theBall/';
 import { connect } from 'react-redux';
-import { changeAnimatedState, ResetAnimation } from '../../actions/TheBallAction';
+import { changeAnimatedState, ResetAnimation, growBall, changeValues } from '../../actions/TheBallAction';
 
 import { NormalWidthAnimation } from '../../stateAnimation/TheBall/Normal';
 import { SadWidthAnimation } from '../../stateAnimation/TheBall/Sad';
@@ -13,6 +13,8 @@ import { SickWidthAnimation } from '../../stateAnimation/TheBall/Sick';
 import { HungryWidthAnimation } from '../../stateAnimation/TheBall/Hungry';
 
 import AnimationBar from '../../components/AnimationBar';
+import BallStatusBar from '../../components/BallStatusBar';
+import { NormalScript } from '../../scripts/stateScripts/NormalScript';
 
 const Home = props => {
 
@@ -24,52 +26,69 @@ const Home = props => {
     checkState()
   }, [timeCheck] )
 
+  // Check current state
   const checkState = () => {
-    // console.log('checkState: ' + props.animatedState);
-    
-    const styleAnimation = {
-      ball: props.AnimeStyle,
-      eye: props.AnimeEyeStyle,
-      defaultBody: props.defaultBody
-    };
-    setStyleRotate({transform:[{rotate: '0deg'}]})
+    checkStateChange(props.animatedState);
+
+    const params = {
+      setTimeCheck: setTimeCheck,
+      timeCheck: timeCheck,
+      setNewValues: props.changeValues,
+      actualValues: {
+        age: props.age,
+        hungry: props.hungry,
+        health: props.health,
+        happyness: props.happyness,
+        animatedState:props.animatedState
+      },
+      styleAnimation: {
+        ball: props.AnimeStyle,
+        eye: props.AnimeEyeStyle,
+        defaultBody: props.defaultBody
+      }
+    }
 
     switch (props.animatedState) {
-      case 'normal':
-         NormalWidthAnimation(styleAnimation, () => { setTimeCheck(!timeCheck)})
-        break;
-      
-      case 'sad':
-        SadWidthAnimation(styleAnimation, () => { setTimeCheck(!timeCheck)});
-        break;
-      
-      case 'sleeping':
-        SleepingWidthAnimation(styleAnimation, () => { setTimeCheck(!timeCheck)});
-        break;
-
-      case 'hungry':
-        HungryWidthAnimation(styleAnimation, () => { setTimeCheck(!timeCheck)});
-        break;
-
-      case 'sick':
-        SickWidthAnimation(styleAnimation, rotate, () => { setTimeCheck(!timeCheck)});
+      case 'normal': NormalScript(params, NormalWidthAnimation); break;
+      case 'sad': NormalScript(params, SadWidthAnimation); break;
+      case 'sleeping': NormalScript(params, SleepingWidthAnimation); break;
+      case 'hungry': NormalScript(params, HungryWidthAnimation); break;
+      case 'dead': NormalScript(params, DeadWidthAnimation); break;
+      case 'sick': 
+        NormalScript(params, SickWidthAnimation, rotate);
         
         const RotateData = rotate.interpolate({
           inputRange: [0,1],
-          outputRange: ['0deg', '180deg']
+          outputRange: ['0deg', '360deg']
         });
+        
         setStyleRotate({transform:[{rotate: RotateData}]})
         
         break;
-        
-      case 'dead':
-        DeadWidthAnimation(styleAnimation, () => { setTimeCheck(!timeCheck)});
-        break;
-      default:
-        break;
+
     }
   }
 
+  // Check if need to change state based on health, hungry and sad values
+  const checkStateChange = (activeState) => {
+
+    if ( activeState != 'normal') {
+      changeAnimation(activeState);
+      return;
+    }
+
+    if ( props.health < 5 ) 
+      changeAnimation('sick');
+      
+    else if (props.hungry > 5) 
+      changeAnimation('hungry');
+    
+    else if (props.happyness < 5 ) 
+      changeAnimation('sad');
+
+  }
+
+  // Change the state
   const changeAnimation = (animatedState) => {
     if ( animatedState != props.animatedState ) {
       props.ResetAnimation({
@@ -81,6 +100,7 @@ const Home = props => {
         }
       });
       
+      setStyleRotate({transform:[{rotate: '0deg'}]});
       props.changeAnimatedState(animatedState);
       setTimeCheck(!timeCheck)
     }
@@ -89,9 +109,7 @@ const Home = props => {
 
   return (
     <Animated.View style={styles.container}>
-      <View>
-        <Text>{props.animatedState}</Text>
-      </View>
+      <BallStatusBar animatedState={props.animatedState} health={props.health} age={props.age} hungry={props.hungry} happyness={props.happyness}/>
 
       <View style={styles.ballContainer}>
         <TheBall 
@@ -101,7 +119,7 @@ const Home = props => {
           eyeStyle={props.AnimeEyeStyle} />
       </View>
       
-      <AnimationBar changeAnimation={changeAnimation}/>
+      <AnimationBar changeAnimation={changeAnimation} growBall={props.growBall}/>
     </Animated.View>
   );
 };
@@ -109,7 +127,12 @@ const Home = props => {
 
 const mapStateToProps = state => {
   return {
+    age: state.Ball.age,
     health: state.Ball.health,
+    hungry: state.Ball.hungry,
+    happyness: state.Ball.happyness,
+
+
     animatedState: state.Ball.animatedState,
     AnimeStyle: state.BallAnime.style,
     AnimeEyeStyle: state.BallAnime.eyeStyle,
@@ -117,7 +140,7 @@ const mapStateToProps = state => {
   }
 }
 
-const HomeConnect = connect(mapStateToProps, {changeAnimatedState, ResetAnimation, SadWidthAnimation})(Home);
+const HomeConnect = connect(mapStateToProps, {changeAnimatedState, changeValues, ResetAnimation, growBall, SadWidthAnimation})(Home);
 
 export default HomeConnect;
 
@@ -131,7 +154,7 @@ const styles = StyleSheet.create({
   },
 
   ballContainer:{
-    flex:1,
+    // flex:1,
     justifyContent: 'center'
   }
   

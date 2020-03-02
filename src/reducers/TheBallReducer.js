@@ -15,8 +15,7 @@ const initialState = {
     }    
   },
 
-
-  animatedState: 'sad'
+  animatedState: 'normal'
 }
 
 const TheBallReducer = ( state = initialState, action) => {
@@ -28,7 +27,35 @@ const TheBallReducer = ( state = initialState, action) => {
         return state;
       else 
         return { ...state, animatedState: newState }
-      
+    
+    case "changeAge" :
+      return { ...state, age: action.payload.age}
+    
+    case "changeHungry" :
+      return { ...state, hungry: action.payload.hungry}
+    
+    case "changeHealth" :
+      return { ...state, health: action.payload.health}
+    
+    case "changeHappyness" :
+      return { ...state, happyness: action.payload.happyness}
+    
+    case "changeValues":
+      return { ...state, hungry: action.payload.hungry, health: action.payload.health, happyness: action.payload.happyness }
+
+    case "growBall":
+      return {
+        ...state,
+        body: {
+          width: state.body.width * 2,
+          height: state.body.height * 2,
+          
+          eye: {
+            width: 8,
+            height: 8,
+          }    
+        },
+      }
     
     default:
       return state;

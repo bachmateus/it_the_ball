@@ -34,6 +34,10 @@ const AnimationBar = props =>
         <Text>Feliz</Text>  
       </TouchableOpacity>
     </View>
+
+    <TouchableOpacity style={style.button} onPress={() => props.growBall() }>
+        <Text>Crescer</Text>  
+      </TouchableOpacity>
   </View>;
 
 export default AnimationBar;
