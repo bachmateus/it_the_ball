@@ -80,10 +80,15 @@ export const changeHappyness = (Happyness) => {
 
 export const changeValues = (hungry, health, happyness) => {
 
-  const newhungry = ( hungry > 10 ) ? 10 : hungry; 
-  const newhealth = ( health < 0 ) ? 0 : health; 
-  const newhappyness = ( happyness < 0 ) ? 0 : happyness;
+  const newhungry = ( hungry > 10 ) ? 10 : 
+    ( hungry < 0 ) ? 0 : hungry; 
 
+  const newhealth = ( health > 10 ) ? 10 : 
+    ( health < 0 ) ? 0 : health; 
+  
+  const newhappyness = ( happyness > 10 ) ? 10 : 
+    ( happyness < 0 ) ? 0 : happyness;
+  
   console.log(hungry, health, happyness)
 
   return ( dispatch ) => {

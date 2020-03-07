@@ -1,9 +1,13 @@
 
 const initialState = {
   age: 0,
-  hungry: 3,
-  health: 7,
+  hungry: 1,
+  health: 5,
   happyness: 7,
+
+  // hungry: 10,
+  // health: 1,
+  // happyness: 1,
 
   body: {
     width: 60,

@@ -5,16 +5,14 @@ import TheBall from '../../components/theBall/';
 import { connect } from 'react-redux';
 import { changeAnimatedState, ResetAnimation, growBall, changeValues } from '../../actions/TheBallAction';
 
-import { NormalWidthAnimation } from '../../stateAnimation/TheBall/Normal';
-import { SadWidthAnimation } from '../../stateAnimation/TheBall/Sad';
-import { SleepingWidthAnimation } from '../../stateAnimation/TheBall/Sleeping';
-import { DeadWidthAnimation } from '../../stateAnimation/TheBall/Dead';
-import { SickWidthAnimation } from '../../stateAnimation/TheBall/Sick';
-import { HungryWidthAnimation } from '../../stateAnimation/TheBall/Hungry';
+import widthAnimation from '../../stateAnimation/TheBall';
+import FeedScript from '../../scripts/actionScript/FeedScript';
+import { NormalScript } from '../../scripts/stateScripts/NormalScript';
 
 import AnimationBar from '../../components/AnimationBar';
 import BallStatusBar from '../../components/BallStatusBar';
-import { NormalScript } from '../../scripts/stateScripts/NormalScript';
+import ActionsBar from '../../components/ActionsBar';
+import FeedBar from '../../components/FeedBar';
 
 const Home = props => {
 
@@ -22,17 +20,21 @@ const Home = props => {
   const [ rotate ] = useState(new Animated.Value(0));
   const [ styleRotate, setStyleRotate ] = useState({transform:[{rotate: '0deg'}]});
   
+  const [ modalFeed, setModalFeed ] = useState(false);
+
   useEffect(() => {
     checkState()
   }, [timeCheck] )
 
   // Check current state
   const checkState = () => {
-    checkStateChange(props.animatedState);
+    if ( props.animatedState != 'denying')
+      checkStateChange(props.animatedState);
 
     const params = {
       setTimeCheck: setTimeCheck,
       timeCheck: timeCheck,
+      changeAnimation: changeAnimation,
       setNewValues: props.changeValues,
       actualValues: {
         age: props.age,
@@ -49,13 +51,14 @@ const Home = props => {
     }
 
     switch (props.animatedState) {
-      case 'normal': NormalScript(params, NormalWidthAnimation); break;
-      case 'sad': NormalScript(params, SadWidthAnimation); break;
-      case 'sleeping': NormalScript(params, SleepingWidthAnimation); break;
-      case 'hungry': NormalScript(params, HungryWidthAnimation); break;
-      case 'dead': NormalScript(params, DeadWidthAnimation); break;
+      // normal states
+      case 'normal': NormalScript(params, widthAnimation.NormalWidthAnimation); break;
+      case 'sad': NormalScript(params, widthAnimation.SadWidthAnimation); break;
+      case 'sleeping': NormalScript(params, widthAnimation.SleepingWidthAnimation); break;
+      case 'hungry': NormalScript(params, widthAnimation.HungryWidthAnimation); break;
+      case 'dead': NormalScript(params, widthAnimation.DeadWidthAnimation); break;
       case 'sick': 
-        NormalScript(params, SickWidthAnimation, rotate);
+        NormalScript(params, widthAnimation.SickWidthAnimation, rotate);
         
         const RotateData = rotate.interpolate({
           inputRange: [0,1],
@@ -65,27 +68,36 @@ const Home = props => {
         setStyleRotate({transform:[{rotate: RotateData}]})
         
         break;
+      
+      // transition states
+      case 'denying': 
+        NormalScript(params, widthAnimation.DenyingWidthAnimation, rotate, 'transition'); 
+        
+        const RotateDataY = rotate.interpolate({
+          inputRange: [0,1],
+          outputRange: ['0deg', '45deg']
+        });
+        
+        setStyleRotate({transform:[{rotateZ: RotateDataY}]});
+        break;
 
     }
   }
 
   // Check if need to change state based on health, hungry and sad values
-  const checkStateChange = (activeState) => {
-
-    if ( activeState != 'normal') {
-      changeAnimation(activeState);
-      return;
-    }
-
-    if ( props.health < 5 ) 
+  const checkStateChange = () => {
+    const actualTime = new Date();
+    console.log(actualTime.getHours())
+    if ( actualTime.getHours() > 16 || actualTime.getHours() < 8 ) {
+      changeAnimation('sleeping');
+    } else if ( props.health < 5 ){ 
       changeAnimation('sick');
-      
-    else if (props.hungry > 5) 
+    } else if (props.hungry > 5){ 
       changeAnimation('hungry');
-    
-    else if (props.happyness < 5 ) 
+    } else if (props.happyness < 5 ){ 
       changeAnimation('sad');
-
+    } else 
+      changeAnimation('normal');
   }
 
   // Change the state
@@ -107,6 +119,41 @@ const Home = props => {
     
   }
 
+  const openModalFeed = () => {
+    setModalFeed(true);
+  }
+
+  // Action of feed
+  const actionFeedBall = feedType => {
+    if ( props.hungry < 2 ) {
+      changeAnimation('denying')
+      return;
+    }
+
+    const params = {
+      setNewValues: props.changeValues,
+      actualValues: {
+        age: props.age,
+        hungry: props.hungry,
+        health: props.health,
+        happyness: props.happyness,
+        animatedState:props.animatedState
+      },
+    }
+
+    FeedScript(feedType, params);
+  }
+
+  // Action of heal
+  const actionHealBall = () => {
+    if ( props.health > 5 ) {
+      changeAnimation('denying')
+      return;
+    }
+
+    props.changeValues(props.hungry, 10 ,props.happyness)
+  } 
+
   return (
     <Animated.View style={styles.container}>
       <BallStatusBar animatedState={props.animatedState} health={props.health} age={props.age} hungry={props.hungry} happyness={props.happyness}/>
@@ -119,7 +166,11 @@ const Home = props => {
           eyeStyle={props.AnimeEyeStyle} />
       </View>
       
-      <AnimationBar changeAnimation={changeAnimation} growBall={props.growBall}/>
+      {/* <AnimationBar changeAnimation={changeAnimation} growBall={props.growBall}/> */}
+
+      { ( modalFeed ) && <FeedBar closeModal={setModalFeed} feedAction={actionFeedBall}/>}
+      
+      <ActionsBar openModalFeed={openModalFeed} actionHealBall={actionHealBall}/>
     </Animated.View>
   );
 };
@@ -140,7 +191,7 @@ const mapStateToProps = state => {
   }
 }
 
-const HomeConnect = connect(mapStateToProps, {changeAnimatedState, changeValues, ResetAnimation, growBall, SadWidthAnimation})(Home);
+const HomeConnect = connect(mapStateToProps, {changeAnimatedState, changeValues, ResetAnimation, growBall})(Home);
 
 export default HomeConnect;
 

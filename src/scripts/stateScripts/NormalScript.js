@@ -1,6 +1,6 @@
 // Degree the ball's properties
-export const NormalScript = (params, animateAction, rotate) => {
-  const { setTimeCheck, timeCheck, setNewValues, actualValues, styleAnimation } = params;
+export const NormalScript = (params, animateAction, rotate, animationState) => {
+  const { timeCheck, setNewValues, actualValues, styleAnimation } = params;
   const newValues = getValues(actualValues.animatedState, actualValues.age);
 
   setNewValues( 
@@ -9,7 +9,10 @@ export const NormalScript = (params, animateAction, rotate) => {
     actualValues.happyness - newValues.happyness
   );
   
-  animateAction(styleAnimation, () => { setTimeCheck(!timeCheck)}, rotate);
+  if ( animationState == 'transition' )
+    animateAction(styleAnimation, () => { params.changeAnimation('normal') }, rotate);
+  else 
+    animateAction(styleAnimation, () => { params.setTimeCheck(!timeCheck)}, rotate);
 }
 
 // Get the values of the quantity of each feelings properties that will be changed based on the ball's age
@@ -56,6 +59,8 @@ function getValues (animatedState, age) {
       ];
       
       return deadNewValues[age];
+    
+    default: return { hungry: 0, health: 0, happyness: 0 };
   }
 }
 
