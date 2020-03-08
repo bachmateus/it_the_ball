@@ -197,7 +197,9 @@ const styles = StyleSheet.create({
     height: Dimensions.get('window').height,
     justifyContent:   'space-between',
     alignItems: 'center',
-    padding: 40
+    // padding: 40,
+    paddingVertical: 40,
+    paddingHorizontal: 20
   },
 
   ballContainer:{

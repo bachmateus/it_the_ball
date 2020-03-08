@@ -13,8 +13,6 @@ const FeedBar = props => {
   const [ foodEating, setFoodEating ] = useState({});
   const [ bittenPart, setBittenPart ] = useState(0);
 
-  console.log(Food);
-
   const eatTheFood = () => {
     const newBittenPart = bittenPart + 20;
     setBittenPart(newBittenPart);
@@ -26,7 +24,6 @@ const FeedBar = props => {
   }
 
   const startToEat = food => {
-    console.log('->>>>>>>>>>>>'+props.hungryStatus)
     if ( props.hungryStatus < 2 ) {
       props.changeAnimation('denying');
       setIsEating(false);
@@ -45,16 +42,14 @@ const FeedBar = props => {
     { ( !isEating ) 
       ? <TouchableOpacity style={styles.closeBox} onPress={()=>{props.closeModal(false)}} />
       : <View style={styles.eatingContainer}>
-          <View style={styles.iconEatingBox}>
-            <Image style={styles.iconEating} source={foodEating.icon} />
-            <View style={[styles.eatenPart, {width:bittenPart}]} />
-          </View>
-          
           <TouchableOpacity onPress={()=>{eatTheFood();}}>
-            <Text>
-              Comer
-            </Text>
+            <View style={styles.iconEatingBox}>
+              <Image style={styles.iconEating} source={foodEating.icon} />
+              <View style={[styles.eatenPart, {width:bittenPart}]} />
+            </View>
           </TouchableOpacity>
+          
+            
         </View>
     }
 
@@ -68,14 +63,7 @@ const FeedBar = props => {
         return <TouchableOpacity key={item.id} style={styles.boxIcon} onPress={()=>startToEat(item)}>
           <Image style={styles.icon} source={item.icon} />
         </TouchableOpacity>} ) }
-
-      {/* <TouchableOpacity style={styles.boxIcon} onPress={()=>startToEat('milk')}>
-        <Image style={styles.icon} source={MilkForBaby} />
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.boxIcon} onPress={()=>startToEat('meat')}>
-        <Image style={styles.icon} source={EatMeat} />
-      </TouchableOpacity> */}
+        
     </View>
   </View>
 }

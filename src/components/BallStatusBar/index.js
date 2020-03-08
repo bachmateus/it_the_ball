@@ -12,14 +12,15 @@ const BallStatusBar = props =>
     
     <View style={style.containerStatus}>
       <View style={style.boxFeeling}>
-        <Text>Feeling: </Text>
-        <Text style={style.statusValue}>{props.animatedState}</Text>
+        <Text style={style.ageValue}>{props.age}</Text>
+        <Image style={style.statusIcon} source={AgeStatus}/>
       </View>
 
-      <View style={style.boxFeeling}>
-        <Image style={style.statusIcon} source={AgeStatus}/>
-        <Text style={style.statusValue}>{props.age}</Text>
-      </View>
+      {/* <View style={style.boxFeeling}>
+        <Text>Feeling: </Text>
+        <Text style={style.statusValue}>{props.animatedState}</Text>
+      </View> */}
+
     </View>
 
     <View style={style.containerStatus}>
@@ -39,46 +40,28 @@ const BallStatusBar = props =>
       </View>
     </View>
 
-    <View style={style.containerBoxes}>
-      <View style={style.button}>
-        <Text>Saúde  </Text>  
-        <Text>{(props.health).toFixed(2)}</Text>  
-      </View>
-
-      <View style={style.button}>
-        <Text>Idade  </Text>  
-        <Text>{(props.age).toFixed(2)}</Text>  
-      </View>
-
-      <View style={style.button}>
-        <Text>Fome  </Text>  
-        <Text>{(props.hungry).toFixed(2)}</Text>  
-      </View>
-
-      <View style={style.button}>
-        <Text>Felicidade  </Text>  
-        <Text>{(props.happyness).toFixed(2)}</Text>  
-      </View>
-    </View>
   </View>;
 
 export default BallStatusBar;
 
 const style = StyleSheet.create({
   container: {
-    alignItems: 'center',
-    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    flexDirection: 'row-reverse',
+    width: '100%'
   },
 
   containerStatus:{
-    alignItems: 'center',
+    alignItems: 'flex-end',
     justifyContent: 'space-between',
-    flexDirection: 'row',
+    // flexDirection: 'row',
     marginBottom: 10
   },
 
   boxFeeling:{
-    flexDirection: 'row'
+    flexDirection: 'row',
+    marginBottom: 5
   },
 
   statusIcon: {
@@ -92,28 +75,15 @@ const style = StyleSheet.create({
     borderWidth: 1,
     paddingHorizontal: 8,
     marginRight: 10,
-    width: 90
+    minWidth: 90
+  },
+
+  ageValue:{
+    marginRight: 10
   },
 
   dangerStatus:{
     color: '#f00',
     borderColor: '#f00'
   },
-
-
-
-
-  containerBoxes:{
-    flexDirection: 'row',
-    display: 'none'
-  }, 
-
-  button: {
-    flexDirection: 'row',
-    margin:5,
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    borderColor: "#000",
-    borderWidth: 1
-  }
 });
