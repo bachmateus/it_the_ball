@@ -20,7 +20,7 @@ const Home = props => {
   const [ rotate ] = useState(new Animated.Value(0));
   const [ styleRotate, setStyleRotate ] = useState({transform:[{rotate: '0deg'}]});
   
-  const [ modalFeed, setModalFeed ] = useState(false);
+  const [ modalFeed, setModalFeed ] = useState(true);
 
   useEffect(() => {
     checkState()
@@ -126,11 +126,6 @@ const Home = props => {
 
   // Action of feed
   const actionFeedBall = feedType => {
-    if ( props.hungry < 2 ) {
-      changeAnimation('denying')
-      return;
-    }
-
     const params = {
       setNewValues: props.changeValues,
       actualValues: {
@@ -169,7 +164,7 @@ const Home = props => {
       
       {/* <AnimationBar changeAnimation={changeAnimation} growBall={props.growBall}/> */}
 
-      { ( modalFeed ) && <FeedBar closeModal={setModalFeed} feedAction={actionFeedBall}/>}
+      { ( modalFeed ) && <FeedBar closeModal={setModalFeed} hungryStatus={props.hungry} feedAction={actionFeedBall} changeAnimation={changeAnimation}/>}
       
       <ActionsBar openModalFeed={openModalFeed} actionHealBall={actionHealBall}/>
     </Animated.View>

@@ -1,27 +1,81 @@
-import React from 'react';
-import { View, StyleSheet, Image, Dimensions, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet, Image, Dimensions, TouchableOpacity, Text } from 'react-native';
 
-import MilkForBaby from '../../assets/Icons/MilkForBaby.png';
-import EatMeat from '../../assets/Icons/EatMeat.png';
+// import MilkForBaby from '../../assets/Icons/MilkForBaby.png';
+// import EatMeat from '../../assets/Icons/EatMeat.png';
+import Food from '../../assets/Food';
+
 import CloseButton from '../../assets/Icons/CloseButton.png';
 
 const FeedBar = props => {
 
+  const [ isEating, setIsEating ] = useState(false);
+  const [ foodEating, setFoodEating ] = useState({});
+  const [ bittenPart, setBittenPart ] = useState(0);
+
+  console.log(Food);
+
+  const eatTheFood = () => {
+    const newBittenPart = bittenPart + 20;
+    setBittenPart(newBittenPart);
+
+    if ( newBittenPart >= 100 ) {
+      setIsEating(false);
+      props.feedAction(foodEating.name);
+    }
+  }
+
+  const startToEat = food => {
+    console.log('->>>>>>>>>>>>'+props.hungryStatus)
+    if ( props.hungryStatus < 2 ) {
+      props.changeAnimation('denying');
+      setIsEating(false);
+      setFoodEating("");
+      setBittenPart(0)
+    } else {
+      setIsEating(true);
+      setFoodEating(food);
+      setBittenPart(0);
+    }
+
+  }
+
   return <View style={styles.container}>
-    <TouchableOpacity style={styles.closeBox} onPress={()=>{props.closeModal(false)}} />
+
+    { ( !isEating ) 
+      ? <TouchableOpacity style={styles.closeBox} onPress={()=>{props.closeModal(false)}} />
+      : <View style={styles.eatingContainer}>
+          <View style={styles.iconEatingBox}>
+            <Image style={styles.iconEating} source={foodEating.icon} />
+            <View style={[styles.eatenPart, {width:bittenPart}]} />
+          </View>
+          
+          <TouchableOpacity onPress={()=>{eatTheFood();}}>
+            <Text>
+              Comer
+            </Text>
+          </TouchableOpacity>
+        </View>
+    }
 
     <View style={styles.actionContainer}>
+
       <TouchableOpacity style={styles.boxIcon} onPress={()=>{props.closeModal(false)}}>
         <Image style={styles.icon} source={CloseButton} />
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.boxIcon} onPress={()=>props.feedAction('milk')}>
+      { Food.map( item => { 
+        return <TouchableOpacity key={item.id} style={styles.boxIcon} onPress={()=>startToEat(item)}>
+          <Image style={styles.icon} source={item.icon} />
+        </TouchableOpacity>} ) }
+
+      {/* <TouchableOpacity style={styles.boxIcon} onPress={()=>startToEat('milk')}>
         <Image style={styles.icon} source={MilkForBaby} />
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.boxIcon} onPress={()=>props.feedAction('meat')}>
+      <TouchableOpacity style={styles.boxIcon} onPress={()=>startToEat('meat')}>
         <Image style={styles.icon} source={EatMeat} />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   </View>
 }
@@ -30,7 +84,6 @@ export default FeedBar;
 
 const styles = StyleSheet.create({
   container:{
-    backgroundColor: 'rgba(0,0,0, 0.16)',
     position:'absolute',
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
@@ -43,6 +96,28 @@ const styles = StyleSheet.create({
     // backgroundColor:'#fff',
     width: '75%',
     height: '100%'
+  },
+
+  eatingContainer:{
+    width: '100%',
+    backgroundColor:'#fff',
+    justifyContent: "center",
+    alignItems: "center"
+  },
+
+  iconEatingBox:{
+    position: 'relative'
+  },
+
+  eatenPart:{
+    backgroundColor: '#fff',
+    position: 'absolute',
+    height: 100
+  },
+
+  iconEating:{
+    width:100,
+    height: 100
   },
 
   actionContainer: {

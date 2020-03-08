@@ -1,8 +1,8 @@
 
 const initialState = {
   age: 0,
-  hungry: 1,
-  health: 5,
+  hungry: 10,
+  health: 10,
   happyness: 7,
 
   // hungry: 10,
