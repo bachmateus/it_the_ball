@@ -28,6 +28,7 @@ const Home = props => {
 
   // Check current state
   const checkState = () => {
+    // return 
     if ( props.animatedState != 'denying')
       checkStateChange(props.animatedState);
 
@@ -87,8 +88,8 @@ const Home = props => {
   // Check if need to change state based on health, hungry and sad values
   const checkStateChange = () => {
     const actualTime = new Date();
-    console.log(actualTime.getHours())
-    if ( actualTime.getHours() > 16 || actualTime.getHours() < 8 ) {
+
+    if ( false && actualTime.getHours() > 16 || actualTime.getHours() < 8 ) {
       changeAnimation('sleeping');
     } else if ( props.health < 5 ){ 
       changeAnimation('sick');
