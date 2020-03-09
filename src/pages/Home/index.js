@@ -13,6 +13,7 @@ import AnimationBar from '../../components/AnimationBar';
 import BallStatusBar from '../../components/BallStatusBar';
 import ActionsBar from '../../components/ActionsBar';
 import FeedBar from '../../components/FeedBar';
+import HealBar from '../../components/HealBar';
 
 const Home = props => {
 
@@ -20,7 +21,8 @@ const Home = props => {
   const [ rotate ] = useState(new Animated.Value(0));
   const [ styleRotate, setStyleRotate ] = useState({transform:[{rotate: '0deg'}]});
   
-  const [ modalFeed, setModalFeed ] = useState(true);
+  const [ modalFeed, setModalFeed ] = useState(false);
+  const [ modalHeal, setModalHeal ] = useState(false);
 
   useEffect(() => {
     checkState()
@@ -150,8 +152,18 @@ const Home = props => {
     props.changeValues(props.hungry, 10 ,props.happyness)
   } 
 
+  // Action of open heal modal
+  const actionOpenHealModal = () => {
+    if ( props.health > 5 ) {
+      changeAnimation('denying')
+      return;
+    }
+
+    setModalHeal(true);
+  }
+
   return (
-    <Animated.View style={styles.container}>
+    <View style={styles.container}>
       <BallStatusBar animatedState={props.animatedState} health={props.health} age={props.age} hungry={props.hungry} happyness={props.happyness}/>
 
       <View style={styles.ballContainer}>
@@ -164,10 +176,13 @@ const Home = props => {
       
       {/* <AnimationBar changeAnimation={changeAnimation} growBall={props.growBall}/> */}
 
-      { ( modalFeed ) && <FeedBar closeModal={setModalFeed} hungryStatus={props.hungry} feedAction={actionFeedBall} changeAnimation={changeAnimation}/>}
       
-      <ActionsBar openModalFeed={openModalFeed} actionHealBall={actionHealBall}/>
-    </Animated.View>
+      { modalFeed && <FeedBar closeModal={setModalFeed} hungryStatus={props.hungry} feedAction={actionFeedBall} changeAnimation={changeAnimation}/>}
+      
+      { modalHeal && <HealBar actionHealBall={actionHealBall} openHealModal={setModalHeal}/>}
+
+      <ActionsBar openModalFeed={openModalFeed} openHealModal={actionOpenHealModal}/>
+    </View>
   );
 };
 
@@ -199,7 +214,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     // padding: 40,
     paddingVertical: 40,
-    paddingHorizontal: 20
+    paddingHorizontal: 20,
+    position: 'relative'
   },
 
   ballContainer:{

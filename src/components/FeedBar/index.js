@@ -14,7 +14,7 @@ const FeedBar = props => {
   const [ bittenPart, setBittenPart ] = useState(0);
 
   const eatTheFood = () => {
-    const newBittenPart = bittenPart + 20;
+    const newBittenPart = bittenPart + 25;
     setBittenPart(newBittenPart);
 
     if ( newBittenPart >= 100 ) {
@@ -42,22 +42,20 @@ const FeedBar = props => {
     { ( !isEating ) 
       ? <TouchableOpacity style={styles.closeBox} onPress={()=>{props.closeModal(false)}} />
       : <View style={styles.eatingContainer}>
-          <TouchableOpacity onPress={()=>{eatTheFood();}}>
-            <View style={styles.iconEatingBox}>
+          <TouchableOpacity style={styles.iconEatingBox} onPress={()=>{eatTheFood();}}>
+            <View>
               <Image style={styles.iconEating} source={foodEating.icon} />
               <View style={[styles.eatenPart, {width:bittenPart}]} />
             </View>
           </TouchableOpacity>
-          
-            
         </View>
     }
 
     <View style={styles.actionContainer}>
 
-      <TouchableOpacity style={styles.boxIcon} onPress={()=>{props.closeModal(false)}}>
+      {/* <TouchableOpacity style={styles.boxIcon} onPress={()=>{props.closeModal(false)}}>
         <Image style={styles.icon} source={CloseButton} />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
       { Food.map( item => { 
         return <TouchableOpacity key={item.id} style={styles.boxIcon} onPress={()=>startToEat(item)}>
@@ -70,31 +68,41 @@ const FeedBar = props => {
 
 export default FeedBar;
 
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
 const styles = StyleSheet.create({
   container:{
     position:'absolute',
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
+    width: windowWidth,
+    height: windowHeight,
     justifyContent: 'space-between',
-    flexDirection: 'row',
-    zIndex: 2
+    // flexDirection: 'row',
+    zIndex: 3
   },
 
   closeBox: {
-    // backgroundColor:'#fff',
-    width: '75%',
-    height: '100%'
+    // backgroundColor:'#f00',
+    width: windowWidth,
+    height: '75%',
+    // display: 'none'
   },
 
   eatingContainer:{
-    width: '100%',
+    width: windowWidth,
+    height: windowHeight,
     backgroundColor:'#fff',
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    // zIndex: 0
   },
 
   iconEatingBox:{
-    position: 'relative'
+    position: 'relative',
+    borderColor: '#000',
+    borderWidth: 5,
+    borderRadius: 100,
+    padding: 30
   },
 
   eatenPart:{
@@ -109,8 +117,19 @@ const styles = StyleSheet.create({
   },
 
   actionContainer: {
-    width: '25%',
-    backgroundColor:'rgba(1,1,1, 0.16)',
+    width: windowWidth,
+    // height: '20%',
+    backgroundColor:'#fff',
+    justifyContent: 'center',
+    marginBottom: 120,
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    // paddingBottom:20, 
+    zIndex: 6,
+    borderBottomColor: '#000',
+    borderBottomWidth: 1,
+    borderTopColor: '#000',
+    borderTopWidth: 1,
   },
 
   boxIcon: {

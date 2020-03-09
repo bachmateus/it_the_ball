@@ -10,8 +10,8 @@ const ActionBar = props =>
     <TouchableOpacity  style={css.iconBox} onPress={props.openModalFeed}>
       <Image style={css.icon} source={FeedButton} />
     </TouchableOpacity>
-
-    <TouchableOpacity style={css.iconBox} onPress={props.actionHealBall}>
+    
+    <TouchableOpacity style={css.iconBox} onPress={props.openHealModal}>
       <Image style={css.icon} source={HealButton} />
     </TouchableOpacity>
 
@@ -24,7 +24,9 @@ export default ActionBar;
 
 const css = StyleSheet.create({
   container: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    position: 'relative'
+    // zIndex: 1
   },
 
   iconBox: {
@@ -34,6 +36,6 @@ const css = StyleSheet.create({
   icon: {
     width: 40,
     height: 40,
-    zIndex: 1
+    // zIndex: 1
   }
 })

@@ -75,7 +75,7 @@ const style = StyleSheet.create({
     borderWidth: 1,
     paddingHorizontal: 8,
     marginRight: 10,
-    minWidth: 90
+    minWidth: 100
   },
 
   ageValue:{
