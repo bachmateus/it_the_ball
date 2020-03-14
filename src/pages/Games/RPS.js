@@ -75,22 +75,22 @@ const RPS = props => {
   return(
     <View style={styles.container}>
       <TouchableOpacity style={styles.closeButtonBox} onPress={() => {closeGame()}}> 
-        <Image style={styles.closeButton} source={CloseButton} />
+        <Image resizeMode="contain" style={styles.closeButton} source={CloseButton} />
       </TouchableOpacity>
 
       <View style={styles.result}>
-        { <Image style={styles.resultIcon} source={ (humanChoice) ? humanChoice.icon : Default} />  }
-        { <Image style={styles.resultIcon} source={ (ballsChoice) ? ballsChoice.icon : Default} />  }
+        { <Image resizeMode="contain" style={styles.resultIcon} source={ (humanChoice) ? humanChoice.icon : Default} />  }
+        { <Image resizeMode="contain" style={styles.resultIcon} source={ (ballsChoice) ? ballsChoice.icon : Default} />  }
       </View>
 
       {(resultIcon ?
         <View style={styles.optionsContainer}>
-          <Image style={styles.resultIcon} source={resultIcon} />
+          <Image resizeMode="contain" style={styles.resultIcon} source={resultIcon} />
         </View>
       : <View style={styles.optionsContainer}>
           {humanOptions.map( (image, index) => 
             <TouchableOpacity style={styles.iconBox} key={index} onPress={ () => { runTheGame(humanOptions[index]) }}>
-              <Image style={styles.icon} source={image.icon} /> 
+              <Image resizeMode="contain" style={styles.icon} source={image.icon} /> 
             </TouchableOpacity>
           )}
         </View>
