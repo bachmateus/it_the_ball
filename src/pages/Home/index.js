@@ -91,7 +91,7 @@ const Home = props => {
   const checkStateChange = () => {
     const actualTime = new Date();
 
-    if ( false && actualTime.getHours() > 16 || actualTime.getHours() < 8 ) {
+    if ( false && actualTime.getHours() > 16 && actualTime.getHours() < 8 ) {
       changeAnimation('sleeping');
     } else if ( props.health < 5 ){ 
       changeAnimation('sick');
