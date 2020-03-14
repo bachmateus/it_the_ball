@@ -15,7 +15,7 @@ const ActionBar = props =>
       <Image style={css.icon} source={HealButton} />
     </TouchableOpacity>
 
-    <TouchableOpacity style={css.iconBox} onPress={()=>alert('play')}>
+    <TouchableOpacity style={css.iconBox} onPress={()=>{ props.openGame()}}>
       <Image style={css.icon} source={PlayButton} />
     </TouchableOpacity>
   </View>

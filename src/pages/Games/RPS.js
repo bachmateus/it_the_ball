@@ -54,6 +54,10 @@ const RPS = props => {
     }
   }
 
+  const closeGame = () => {
+    props.navigation.goBack()
+  }
+
   useEffect( () => {
     if ( ballsChoice ) {
       const _iconResult = ( returnResult() ) ? Win : Lose;
@@ -70,7 +74,7 @@ const RPS = props => {
 
   return(
     <View style={styles.container}>
-      <TouchableOpacity style={styles.closeButtonBox} onPress={() => {}}> 
+      <TouchableOpacity style={styles.closeButtonBox} onPress={() => {closeGame()}}> 
         <Image style={styles.closeButton} source={CloseButton} />
       </TouchableOpacity>
 

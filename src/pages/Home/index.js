@@ -162,6 +162,9 @@ const Home = props => {
     setModalHeal(true);
   }
 
+  const openGame = () => {
+    props.navigation.push('Game');
+  }
   return (
     <View style={styles.container}>
       <BallStatusBar animatedState={props.animatedState} health={props.health} age={props.age} hungry={props.hungry} happyness={props.happyness}/>
@@ -181,7 +184,7 @@ const Home = props => {
       
       { modalHeal && <HealBar actionHealBall={actionHealBall} openHealModal={setModalHeal}/>}
 
-      <ActionsBar openModalFeed={openModalFeed} openHealModal={actionOpenHealModal}/>
+      <ActionsBar openModalFeed={openModalFeed} openHealModal={actionOpenHealModal} openGame={openGame}/>
     </View>
   );
 };
