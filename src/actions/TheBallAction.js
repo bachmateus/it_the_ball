@@ -89,8 +89,6 @@ export const changeValues = (hungry, health, happyness) => {
   const newhappyness = ( happyness > 10 ) ? 10 : 
     ( happyness < 0 ) ? 0 : happyness;
   
-  console.log(hungry, health, happyness)
-
   return ( dispatch ) => {
     dispatch({
       type: 'changeValues',

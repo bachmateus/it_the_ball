@@ -34,10 +34,8 @@ const RPS = props => {
   const [ resultIcon, setResultIcon] = useState(null);
 
   const runTheGame = choice => {
-    console.log(choice);
     setHumanChoice(choice);
     setBallsChoice(ballsOptions[randomChoice()])
-    // alert(choice)
   }
 
   const randomChoice = () => {

@@ -1,7 +1,8 @@
 import { Animated } from 'react-native';
+import { showConsoleStateAnimation } from '../config';
 
 export const SleepingWidthAnimation = (style, checkAnimate) => {
-  console.log('Animating Sleeping')
+  (showConsoleStateAnimation) && console.log('Animating Sleeping')
 
   Animated.sequence([
 

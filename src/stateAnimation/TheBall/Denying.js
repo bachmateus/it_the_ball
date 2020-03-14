@@ -1,8 +1,9 @@
 import { Animated } from 'react-native';
 import { Easing } from 'react-native-reanimated';
+import { showConsoleStateAnimation } from '../config';
 
 export const DenyingWidthAnimation = (style, checkAnimate, rotation) => {
-  console.log('Animating Denying');
+  (showConsoleStateAnimation) && console.log('Animating Denying');
   
   Animated.sequence([
     Animated.parallel([

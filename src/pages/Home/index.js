@@ -9,7 +9,7 @@ import widthAnimation from '../../stateAnimation/TheBall';
 import FeedScript from '../../scripts/actionScript/FeedScript';
 import { NormalScript } from '../../scripts/stateScripts/NormalScript';
 
-import AnimationBar from '../../components/AnimationBar';
+// import AnimationBar from '../../components/AnimationBar';
 import BallStatusBar from '../../components/BallStatusBar';
 import ActionsBar from '../../components/ActionsBar';
 import FeedBar from '../../components/FeedBar';

@@ -22,7 +22,7 @@ const TheBallAnimation = ( state = initialState, action ) => {
   switch (action.type) {
     case "ResetAnimation": 
       const newStyle = action.payload;
-      console.log(newStyle.width)
+      
       return { 
         ...state,
         style: {

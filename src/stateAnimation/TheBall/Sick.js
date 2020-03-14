@@ -1,8 +1,10 @@
 import { Animated } from 'react-native';
 import { Easing } from 'react-native-reanimated';
 
+import { showConsoleStateAnimation } from '../config';
+
 export const SickWidthAnimation = (style, checkAnimate, rotation) => {
-  console.log('Animating Sick')
+  (showConsoleStateAnimation) && console.log('Animating Sick');
   
   Animated.sequence([
     

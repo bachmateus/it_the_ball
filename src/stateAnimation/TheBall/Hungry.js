@@ -1,7 +1,8 @@
 import { Animated } from 'react-native';
+import { showConsoleStateAnimation } from '../config';
 
 export const HungryWidthAnimation = (style, checkAnimate) => {
-  console.log('Animating Hungry')
+  (showConsoleStateAnimation) && console.log('Animating Hungry')
 
   const ballWidth = style.defaultBody.width;
   const ballMinWidth = style.defaultBody.width - 20;

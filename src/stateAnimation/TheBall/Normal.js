@@ -1,7 +1,8 @@
 import { Animated } from 'react-native';
+import { showConsoleStateAnimation } from '../config';
 
 export const NormalWidthAnimation = (style, checkAnimate) => {
-  console.log('Animating Normal')
+  (showConsoleStateAnimation) && console.log('Animating Normal')
   
   const initial = Animated.timing(
     style.ball.width,
