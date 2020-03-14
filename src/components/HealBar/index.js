@@ -15,17 +15,16 @@ const HealBar = props => {
 
   const renderPills = () => {
     return pills.map( (item, index) => {
-      if ( index <= totalPills)
+      if ( index < totalPills)
         return <Image key={index}  style={style.pillIcon} source={item}/>
-    })
+    });
   }
   
   const takeAPill = () => {
     const newTotalPills = totalPills - 1;
-
     setTotalPills(newTotalPills);
 
-    if ( newTotalPills < 0) {
+    if ( newTotalPills <= 0) {
       setTotalPills(3);
       props.actionHealBall();
       props.openHealModal(false);
