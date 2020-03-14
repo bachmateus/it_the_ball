@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { connect } from 'react-redux';
+
+import { changeHappyness } from '../../actions/TheBallAction';
 
 import PaperLeft from '../../assets/Game/PaperLeft.png';
 import PaperRight from '../../assets/Game/PaperRight.png';
@@ -60,8 +63,12 @@ const RPS = props => {
 
   useEffect( () => {
     if ( ballsChoice ) {
-      const _iconResult = ( returnResult() ) ? Win : Lose;
+      const gameResult = returnResult();
+      const _iconResult = ( gameResult === true ) ? Win : Lose;
+      const newHappyness = ( gameResult === true ) ? 5 : 2;
+
       setResultIcon(_iconResult);
+      props.changeHappyness(props.happyness + newHappyness);
 
       setTimeout(() => {
         setResultIcon(null);
@@ -99,7 +106,15 @@ const RPS = props => {
   )
 }
 
-export default RPS;
+const mapStateToProps = state => {
+  return {
+    happyness: state.Ball.happyness,
+  }
+}
+
+const RPSConnect = connect(mapStateToProps, { changeHappyness })(RPS);
+
+export default RPSConnect;
 
 const styles = StyleSheet.create({
 

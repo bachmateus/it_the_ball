@@ -8,15 +8,15 @@ import PlayButton from '../../assets/Icons/PlayButton.png';
 const ActionBar = props => 
   <View style={css.container}>
     <TouchableOpacity  style={css.iconBox} onPress={props.openModalFeed}>
-      <Image style={css.icon} source={FeedButton} />
+      <Image resizeMode="cover" style={css.icon} source={FeedButton} />
     </TouchableOpacity>
     
     <TouchableOpacity style={css.iconBox} onPress={props.openHealModal}>
-      <Image style={css.icon} source={HealButton} />
+      <Image resizeMode="cover" style={css.icon} source={HealButton} />
     </TouchableOpacity>
 
     <TouchableOpacity style={css.iconBox} onPress={()=>{ props.openGame()}}>
-      <Image style={css.icon} source={PlayButton} />
+      <Image resizeMode="cover" style={css.icon} source={PlayButton} />
     </TouchableOpacity>
   </View>
 

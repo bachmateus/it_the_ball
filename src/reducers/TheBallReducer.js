@@ -2,7 +2,7 @@
 const initialState = {
   age: 0,
   hungry: 10,
-  health: 10,
+  health: 0,
   happyness: 7,
 
   // hungry: 10,
