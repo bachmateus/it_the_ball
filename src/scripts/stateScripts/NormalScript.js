@@ -38,9 +38,9 @@ function getValues (animatedState, age) {
     
     case 'sleeping':
       const sleepingNewValues = [
-        { hungry: 0.2, health: 0, happyness: 0 },
-        { hungry: 0.2, health: 0, happyness: 0 },
-        { hungry: 0.2, health: 0, happyness: 0 },
+        { hungry: 0.5, health: 0, happyness: 0 },
+        { hungry: 0.5, health: 0, happyness: 0 },
+        { hungry: 0.5, health: 0, happyness: 0 },
       ];
       
       return sleepingNewValues[age];

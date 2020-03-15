@@ -13,7 +13,7 @@ export const FeedScript = ( feedType, params ) => {
   let feelingsValuesChange = getValueToChange(feedType, actualValues.age);
 
   if ( !feelingsValuesChange ) {
-    console.log('error -> Comida ou idade inválida');
+    console.log('FeedScript -> Comida ou idade inválida');
     return;
   }
 

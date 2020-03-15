@@ -15,6 +15,8 @@ import BallStatusBar from '../../components/BallStatusBar';
 import ActionsBar from '../../components/ActionsBar';
 import FeedBar from '../../components/FeedBar';
 import HealBar from '../../components/HealBar';
+import APIAsyncStorage from '../../services/APIAsyncStorage';
+import AsyncStorage from "@react-native-community/async-storage";
 
 const Home = props => {
 
@@ -25,9 +27,11 @@ const Home = props => {
   const [ modalFeed, setModalFeed ] = useState(false);
   const [ modalHeal, setModalHeal ] = useState(false);
 
+  const [ lastUpdate, setLastUpdate ] = useState();
+
   useEffect(() => {
     checkState()
-  }, [timeCheck] )
+  }, [timeCheck] );
 
   // Check current state
   const checkState = () => {
@@ -89,8 +93,12 @@ const Home = props => {
   }
 
   // Check if need to change state based on health, hungry and sad values
-  const checkStateChange = () => {
+  const checkStateChange = (currentAnimation) => {
     const actualTime = new Date();
+    checkLastUpdate(currentAnimation);
+
+    if ( currentAnimation == 'dead' )
+      return;
 
     if ( actualTime.getHours() < sleepTime.wakeup || actualTime.getHours() > sleepTime.sleep ) {
       changeAnimation('sleeping');
@@ -128,11 +136,39 @@ const Home = props => {
     
   }
 
+  // Increase the balls's age and grow it
   const wakupTheBall = () => {
     if ( props.age < maxAge ) {
       props.growBall();
       props.changeAge(props.age + 1);
     }
+  }
+
+  const checkLastUpdate = (currentState) => {
+    AsyncStorage.getItem(`lastUpdate`).then( (item)=>{
+      setLastUpdate(item)
+      
+      const lastUpdate = (item) ? new Date(item) : new Date() ;
+      const currentDate = new Date();
+  
+      const diferenceTime = ( currentDate.getTime() - lastUpdate.getTime() ) / 1000 / 60 / 60;
+      console.log(diferenceTime);
+      
+      AsyncStorage.setItem(`lastUpdate`, currentDate.toString());
+      
+      if ( currentState == 'sleeping' )
+        return;
+
+      if ( Math.round(diferenceTime) >= 5 ) { // +5 hour
+        changeAnimation('dead');
+      }else if ( Math.round(diferenceTime) >= 3 ) { // +3 hour
+        props.changeValues(10, 0 ,0);
+      } else if ( Math.round(diferenceTime) >= 2 ) { // +2 hour
+        props.changeValues(8, 4 ,0);
+      } else if ( Math.round(diferenceTime) >= 1 ) { // +1 hour
+        props.changeValues(5, 6 ,6);
+      }
+    });
   }
 
   const openModalFeed = () => {
@@ -187,7 +223,8 @@ const Home = props => {
           width={props.AnimeWidth}
           styleRotate={styleRotate}
           ballStyle={props.AnimeStyle}
-          eyeStyle={props.AnimeEyeStyle} />
+          eyeStyle={props.AnimeEyeStyle}
+          age={props.age} />
       </View>
       
       <AnimationBar changeAnimation={changeAnimation} growBall={props.growBall} status={[props.health, props.hungry, props.happyness]}/>

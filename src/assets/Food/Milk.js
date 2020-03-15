@@ -5,7 +5,9 @@ const Milk = {
   name: 'milk', 
   icon: MilkForBaby,
   feed: [
-    { hungry: 3, health: 1, happyness: 1 }
+    { hungry: 3, health: 1, happyness: 1 },
+    { hungry: 2, health: 1, happyness: 0 },
+    { hungry: 0, health: 1, happyness: -2 },
   ]
 };
 

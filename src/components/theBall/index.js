@@ -3,7 +3,7 @@ import { Animated, Text, StyleSheet, View } from 'react-native';
 
 const TheBall = props => 
   <Animated.View style={[styles.circulo, props.ballStyle, props.styleRotate]}> 
-    <View style={[styles.eyeContainer]}>
+    <View style={[styles.eyeContainer, {marginTop: (props.age + 1) * 10}]}>
       <Animated.View style={[styles.eye, props.eyeStyle]} />
       <Animated.View style={[styles.eye, props.eyeStyle]} />
     </View>
