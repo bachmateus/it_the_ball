@@ -16,11 +16,6 @@ const BallStatusBar = props =>
         <Image style={style.statusIcon} source={AgeStatus}/>
       </View>
 
-      {/* <View style={style.boxFeeling}>
-        <Text>Feeling: </Text>
-        <Text style={style.statusValue}>{props.animatedState}</Text>
-      </View> */}
-
     </View>
 
     <View style={style.containerStatus}>

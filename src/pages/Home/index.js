@@ -3,13 +3,14 @@ import { Animated, StyleSheet, Dimensions, View, } from 'react-native';
 
 import TheBall from '../../components/theBall/';
 import { connect } from 'react-redux';
-import { changeAnimatedState, ResetAnimation, growBall, changeValues } from '../../actions/TheBallAction';
+import { changeAnimatedState, ResetAnimation, growBall, changeValues, changeAge, } from '../../actions/TheBallAction';
 
 import widthAnimation from '../../stateAnimation/TheBall';
 import FeedScript from '../../scripts/actionScript/FeedScript';
 import { NormalScript } from '../../scripts/stateScripts/NormalScript';
+import { sleepTime, maxAge } from '../../scripts/config';
 
-// import AnimationBar from '../../components/AnimationBar';
+import AnimationBar from '../../components/AnimationBar';
 import BallStatusBar from '../../components/BallStatusBar';
 import ActionsBar from '../../components/ActionsBar';
 import FeedBar from '../../components/FeedBar';
@@ -91,7 +92,7 @@ const Home = props => {
   const checkStateChange = () => {
     const actualTime = new Date();
 
-    if ( false && actualTime.getHours() > 16 && actualTime.getHours() < 8 ) {
+    if ( actualTime.getHours() < sleepTime.wakeup || actualTime.getHours() > sleepTime.sleep ) {
       changeAnimation('sleeping');
     } else if ( props.health < 5 ){ 
       changeAnimation('sick');
@@ -113,13 +114,25 @@ const Home = props => {
           width:props.defaultBody.eye.width,
           height:props.defaultBody.eye.height,    
         }
+
       });
       
+      if ( animatedState == 'sleeping') {
+        wakupTheBall();
+      }
+
       setStyleRotate({transform:[{rotate: '0deg'}]});
       props.changeAnimatedState(animatedState);
       setTimeCheck(!timeCheck)
     }
     
+  }
+
+  const wakupTheBall = () => {
+    if ( props.age < maxAge ) {
+      props.growBall();
+      props.changeAge(props.age + 1);
+    }
   }
 
   const openModalFeed = () => {
@@ -177,7 +190,7 @@ const Home = props => {
           eyeStyle={props.AnimeEyeStyle} />
       </View>
       
-      {/* <AnimationBar changeAnimation={changeAnimation} growBall={props.growBall}/> */}
+      <AnimationBar changeAnimation={changeAnimation} growBall={props.growBall} status={[props.health, props.hungry, props.happyness]}/>
 
       
       { modalFeed && <FeedBar closeModal={setModalFeed} hungryStatus={props.hungry} feedAction={actionFeedBall} changeAnimation={changeAnimation}/>}
@@ -205,7 +218,7 @@ const mapStateToProps = state => {
   }
 }
 
-const HomeConnect = connect(mapStateToProps, {changeAnimatedState, changeValues, ResetAnimation, growBall})(Home);
+const HomeConnect = connect(mapStateToProps, {changeAnimatedState, changeValues, ResetAnimation, growBall, changeAge})(Home);
 
 export default HomeConnect;
 

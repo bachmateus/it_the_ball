@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Image, Dimensions, TouchableOpacity, Text } from 'react-native';
+import { View, StyleSheet, Image, Dimensions, TouchableOpacity } from 'react-native';
 
-// import MilkForBaby from '../../assets/Icons/MilkForBaby.png';
-// import EatMeat from '../../assets/Icons/EatMeat.png';
 import Food from '../../assets/Food';
-
-import CloseButton from '../../assets/Icons/CloseButton.png';
 
 const FeedBar = props => {
 
@@ -52,16 +48,10 @@ const FeedBar = props => {
     }
 
     <View style={styles.actionContainer}>
-
-      {/* <TouchableOpacity style={styles.boxIcon} onPress={()=>{props.closeModal(false)}}>
-        <Image style={styles.icon} source={CloseButton} />
-      </TouchableOpacity> */}
-
       { Food.map( item => { 
         return <TouchableOpacity key={item.id} style={styles.boxIcon} onPress={()=>startToEat(item)}>
           <Image style={styles.icon} source={item.icon} />
-        </TouchableOpacity>} ) }
-        
+        </TouchableOpacity>} ) }      
     </View>
   </View>
 }
@@ -77,15 +67,12 @@ const styles = StyleSheet.create({
     width: windowWidth,
     height: windowHeight,
     justifyContent: 'space-between',
-    // flexDirection: 'row',
     zIndex: 3
   },
 
   closeBox: {
-    // backgroundColor:'#f00',
     width: windowWidth,
     height: '75%',
-    // display: 'none'
   },
 
   eatingContainer:{
@@ -94,7 +81,6 @@ const styles = StyleSheet.create({
     backgroundColor:'#fff',
     justifyContent: "center",
     alignItems: "center",
-    // zIndex: 0
   },
 
   iconEatingBox:{
@@ -118,13 +104,11 @@ const styles = StyleSheet.create({
 
   actionContainer: {
     width: windowWidth,
-    // height: '20%',
     backgroundColor:'#fff',
     justifyContent: 'center',
     marginBottom: 120,
     flexDirection: 'row',
     alignItems: 'flex-end',
-    // paddingBottom:20, 
     zIndex: 6,
     borderBottomColor: '#000',
     borderBottomWidth: 1,

@@ -1,7 +1,7 @@
 import { Animated } from 'react-native';
 import { Easing } from 'react-native-reanimated';
 
-import { showConsoleStateAnimation } from '../config';
+import { showConsoleStateAnimation, speedTimeGame } from '../../scripts/config';
 
 export const SickWidthAnimation = (style, checkAnimate, rotation) => {
   (showConsoleStateAnimation) && console.log('Animating Sick');
@@ -13,28 +13,28 @@ export const SickWidthAnimation = (style, checkAnimate, rotation) => {
         rotation,
         {
           toValue: 1,
-          duration: 3000,
+          duration: (3000 * speedTimeGame),
           easing: Easing.linear,
         }
       ),
       Animated.timing(
         style.eye.height,
-        {toValue: style.defaultBody.eye.height, duration: 400 }
+        {toValue: style.defaultBody.eye.height, duration: (400 * speedTimeGame) }
         ),
       Animated.timing(
           style.eye.width,
-          {toValue: style.defaultBody.eye.width, duration: 400 }
+          {toValue: style.defaultBody.eye.width, duration: (400 * speedTimeGame) }
           ),
     ]),
         
     Animated.parallel([
       Animated.timing(
         style.eye.height,
-        {toValue: style.defaultBody.eye.height + 10, duration: 400 }
+        {toValue: style.defaultBody.eye.height + 10, duration: (400 * speedTimeGame) }
         ),
       Animated.timing(
           style.eye.width,
-          {toValue: style.defaultBody.eye.width + 10, duration: 400 }
+          {toValue: style.defaultBody.eye.width + 10, duration: (400 * speedTimeGame) }
           ),
     ]),
 
@@ -42,7 +42,7 @@ export const SickWidthAnimation = (style, checkAnimate, rotation) => {
       rotation,
       {
         toValue: 2,
-        duration: 1500,
+        duration: (1500 * speedTimeGame),
         easing: Easing.linear,
       }
     ),

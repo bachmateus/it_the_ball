@@ -1,5 +1,5 @@
 import { Animated } from 'react-native';
-import { showConsoleStateAnimation } from '../config';
+import { showConsoleStateAnimation } from '../../scripts/config';
 
 export const DeadWidthAnimation = (style, checkAnimate) => {
   (showConsoleStateAnimation) && console.log('Animating Sleeping')

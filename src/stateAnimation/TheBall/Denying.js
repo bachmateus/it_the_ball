@@ -1,6 +1,6 @@
 import { Animated } from 'react-native';
 import { Easing } from 'react-native-reanimated';
-import { showConsoleStateAnimation } from '../config';
+import { showConsoleStateAnimation, speedTimeGame } from '../../scripts/config';
 
 export const DenyingWidthAnimation = (style, checkAnimate, rotation) => {
   (showConsoleStateAnimation) && console.log('Animating Denying');
@@ -9,17 +9,17 @@ export const DenyingWidthAnimation = (style, checkAnimate, rotation) => {
     Animated.parallel([
       Animated.timing(
         style.ball.height,
-        {toValue: style.defaultBody.width, duration: 100 }
+        {toValue: style.defaultBody.width, duration: (100 * speedTimeGame) }
       ),
 
       Animated.timing(
         style.ball.width,
-        {toValue: style.defaultBody.width, duration: 100 }
+        {toValue: style.defaultBody.width, duration: (100 * speedTimeGame) }
       ),
 
       Animated.timing(
         style.eye.height,
-        {toValue: 2, duration: 100 }
+        {toValue: 2, duration: (100 * speedTimeGame) }
         ),
     ]),
 
@@ -27,7 +27,7 @@ export const DenyingWidthAnimation = (style, checkAnimate, rotation) => {
       rotation,
       {
         toValue: 1,
-        duration: 200,
+        duration: (200 * speedTimeGame),
         easing: Easing.linear,
       }
     ),
@@ -36,7 +36,7 @@ export const DenyingWidthAnimation = (style, checkAnimate, rotation) => {
       rotation,
       {
         toValue: -1,
-        duration: 200,
+        duration: (200 * speedTimeGame),
         easing: Easing.linear,
       }
     ),
@@ -45,7 +45,7 @@ export const DenyingWidthAnimation = (style, checkAnimate, rotation) => {
       rotation,
       {
         toValue: 1,
-        duration: 200,
+        duration: (200 * speedTimeGame),
         easing: Easing.linear,
       }
     ),
@@ -54,7 +54,7 @@ export const DenyingWidthAnimation = (style, checkAnimate, rotation) => {
       rotation,
       {
         toValue: -1,
-        duration: 200,
+        duration: (200 * speedTimeGame),
         easing: Easing.linear,
       }
     ),
@@ -63,14 +63,14 @@ export const DenyingWidthAnimation = (style, checkAnimate, rotation) => {
       rotation,
       {
         toValue: 0,
-        duration: 200,
+        duration: (200 * speedTimeGame),
         easing: Easing.linear,
       }
     ),
 
     Animated.timing(
       style.eye.height,
-      {toValue: style.defaultBody.eye.height, duration: 300 }
+      {toValue: style.defaultBody.eye.height, duration: (300 * speedTimeGame) }
     ),
   ]).start(function(){checkAnimate()});
 }

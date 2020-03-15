@@ -1,5 +1,5 @@
 import { Animated } from 'react-native';
-import { showConsoleStateAnimation } from '../config';
+import { showConsoleStateAnimation, speedTimeGame } from '../../scripts/config';
 
 export const SleepingWidthAnimation = (style, checkAnimate) => {
   (showConsoleStateAnimation) && console.log('Animating Sleeping')
@@ -9,23 +9,23 @@ export const SleepingWidthAnimation = (style, checkAnimate) => {
     Animated.parallel([
       Animated.timing(
         style.eye.height,
-        {toValue: 1, duration: 1200 }
+        {toValue: 1, duration: (1200 * speedTimeGame) }
       ), // Fechar olho
   
       Animated.timing(
         style.ball.width,
-        {toValue: style.defaultBody.width , duration: 1200 }
+        {toValue: style.defaultBody.width , duration: (1200 * speedTimeGame) }
       ), 
       
       Animated.timing(
         style.ball.height,
-        {toValue: style.defaultBody.height - 10, duration: 1200 }
+        {toValue: style.defaultBody.height - 10, duration: (1200 * speedTimeGame) }
       ),
     ]),
 
     Animated.timing(
       style.ball.height,
-      {toValue: style.defaultBody.height - 20, duration: 2000 }
+      {toValue: style.defaultBody.height - 20, duration: (2000 * speedTimeGame) }
     ),
 
   ]).start(

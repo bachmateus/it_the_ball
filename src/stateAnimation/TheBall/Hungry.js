@@ -1,5 +1,5 @@
 import { Animated } from 'react-native';
-import { showConsoleStateAnimation } from '../config';
+import { showConsoleStateAnimation, speedTimeGame } from '../../scripts/config';
 
 export const HungryWidthAnimation = (style, checkAnimate) => {
   (showConsoleStateAnimation) && console.log('Animating Hungry')
@@ -16,58 +16,58 @@ export const HungryWidthAnimation = (style, checkAnimate) => {
     Animated.parallel([
       Animated.timing(
         style.ball.width,
-        {toValue: ballWidth, duration: 400 }
+        {toValue: ballWidth, duration: (400 * speedTimeGame) }
       ),
 
       Animated.timing(
         style.ball.height,
-        {toValue: ballMinHeight, duration: 400 }
+        {toValue: ballMinHeight, duration: (400 * speedTimeGame) }
       ),
 
       Animated.timing(
         style.eye.height,
-        {toValue: 2, duration: 400 }
+        {toValue: 2, duration: (400 * speedTimeGame) }
       ),
     ]), 
 
     Animated.parallel([
       Animated.timing(
         style.ball.width,
-        {toValue: ballMinWidth, duration: 100 }
+        {toValue: ballMinWidth, duration: (100 * speedTimeGame) }
       ),
 
       Animated.timing(
         style.ball.height,
-        {toValue: ballHeight, duration: 100 }
+        {toValue: ballHeight, duration: (100 * speedTimeGame) }
       ),
     ]),
 
     Animated.parallel([
       Animated.timing(
         style.ball.width,
-        {toValue: ballWidth, duration: 400 }
+        {toValue: ballWidth, duration: (400 * speedTimeGame) }
       ),
 
       Animated.timing(
         style.ball.height,
-        {toValue: ballMinHeight, duration: 400 }
+        {toValue: ballMinHeight, duration: (400 * speedTimeGame) }
       ),
     ]), 
 
     Animated.parallel([
       Animated.timing(
         style.ball.width,
-        {toValue: ballMinWidth, duration: 100 }
+        {toValue: ballMinWidth, duration: (100 * speedTimeGame) }
       ),
 
       Animated.timing(
         style.ball.height,
-        {toValue: ballHeight, duration: 100 }
+        {toValue: ballHeight, duration: (100 * speedTimeGame) }
       ),
 
       Animated.timing(
         style.eye.height,
-        {toValue: eyeHeight, duration: 400 }
+        {toValue: eyeHeight, duration: (400 * speedTimeGame) }
       ),
     ]),
 
