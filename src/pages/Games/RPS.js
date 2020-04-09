@@ -15,6 +15,12 @@ import Win from '../../assets/Game/Win.png';
 import Lose from '../../assets/Game/Lose.png';
 import CloseButton from '../../assets/Icons/CloseButton.png';
 
+/**
+ * Game Component
+ * @param {*} props 
+ * 
+ * @returns the component
+ */
 const RPS = props => {
   
   const humanOptions = [

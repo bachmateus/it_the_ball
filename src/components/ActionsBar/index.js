@@ -1,10 +1,18 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
 
 import FeedButton from '../../assets/Icons/FeedButton.png';
 import HealButton from '../../assets/Icons/HealButton.png';
 import PlayButton from '../../assets/Icons/PlayButton.png';
 
+/**
+ * Dumb component that make the user to choose the apropriated action that he/she wants to to with the ball
+ * 
+ * @param {Function} props.openModalFeed onPress the feed modal will be openned
+ * @param {Function} props.openHealModal onPress the healing modal will be openned
+ * @param {Function} props.openGame onPress the game stack will be openned
+ * 
+ */
 const ActionBar = props => 
   <View style={css.container}>
     <TouchableOpacity  style={css.iconBox} onPress={props.openModalFeed}>
@@ -26,7 +34,6 @@ const css = StyleSheet.create({
   container: {
     flexDirection: 'row',
     position: 'relative'
-    // zIndex: 1
   },
 
   iconBox: {
@@ -36,6 +43,5 @@ const css = StyleSheet.create({
   icon: {
     width: 40,
     height: 40,
-    // zIndex: 1
   }
 })

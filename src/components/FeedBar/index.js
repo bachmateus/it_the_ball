@@ -3,12 +3,27 @@ import { View, StyleSheet, Image, Dimensions, TouchableOpacity } from 'react-nat
 
 import Food from '../../assets/Food';
 
+/**
+ * Smart Component that will show the button to eat the food, when typed the button's icon will desapear gradually.
+ * The intention of this component is to make the user typed the button in order to interact with the game.
+ * 
+ * @param {*} props 
+ * @param {Function} props.feedAction
+ * @param {Function} props.closeModal
+ * @param {Function} props.changeAnimation
+ * @param {Number} props.hungryStatus
+ * 
+ * @returns {Component}
+ */
 const FeedBar = props => {
 
   const [ isEating, setIsEating ] = useState(false);
   const [ foodEating, setFoodEating ] = useState({});
   const [ bittenPart, setBittenPart ] = useState(0);
 
+  /**
+   * Make the ball eat the selected food
+   */
   const eatTheFood = () => {
     const newBittenPart = bittenPart + 25;
     setBittenPart(newBittenPart);
@@ -19,6 +34,9 @@ const FeedBar = props => {
     }
   }
 
+  /**
+   * Function that verify if the ball is hungry and set the food the user choose if not hungry it will start the denying animation
+   */
   const startToEat = food => {
     if ( props.hungryStatus < 2 ) {
       props.changeAnimation('denying');
@@ -106,7 +124,7 @@ const styles = StyleSheet.create({
     width: windowWidth,
     backgroundColor:'#fff',
     justifyContent: 'center',
-    marginBottom: 120,
+    marginBottom: 30,
     flexDirection: 'row',
     alignItems: 'flex-end',
     zIndex: 6,

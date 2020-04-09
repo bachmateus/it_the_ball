@@ -1,5 +1,8 @@
 import MilkForBaby from '../Icons/MilkForBaby.png';
 
+/**
+ * Object Milk
+ */
 const Milk = { 
   id: 0, 
   name: 'milk', 

@@ -9,9 +9,10 @@ const Food = [
 export default Food;
 
 /**
- * Function created to get the feelings value that will increase or decrease to the actual value
+ * Function created to get the feelings value that will increase or decrease to the actual feelings values
  * @param {String} feedType 
  * @param {Number} age 
+ * 
  * @returns {Object}
  */
 export const getValueToChange = ( feedType, age ) => {

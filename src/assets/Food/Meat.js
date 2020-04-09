@@ -1,5 +1,8 @@
 import EatMeat from '../Icons/EatMeat.png';
 
+/**
+ * Object Meat 
+ */
 const Meat = { 
   id: 1, 
   name: 'meat', 

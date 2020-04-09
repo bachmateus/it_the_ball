@@ -227,7 +227,7 @@ const Home = props => {
           age={props.age} />
       </View>
       
-      <AnimationBar changeAnimation={changeAnimation} growBall={props.growBall} status={[props.health, props.hungry, props.happyness]}/>
+      {/* <AnimationBar changeAnimation={changeAnimation} growBall={props.growBall} status={[props.health, props.hungry, props.happyness]}/> */}
 
       
       { modalFeed && <FeedBar closeModal={setModalFeed} hungryStatus={props.hungry} feedAction={actionFeedBall} changeAnimation={changeAnimation}/>}

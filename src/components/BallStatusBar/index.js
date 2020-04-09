@@ -6,7 +6,16 @@ import HealthStatus from '../../assets/Icons/HealthStatus.png';
 import HungryStatus from '../../assets/Icons/HungryStatus.png';
 import AgeStatus from '../../assets/Icons/AgeStatus.png';
 
-
+/**
+ * Dumb component that will show the status of the ball, like happyness, health, hungry and age
+ * 
+ * @param {*} props 
+ * @param {Number} props.age
+ * @param {Number} props.happyness
+ * @param {Number} props.health
+ * @param {Number} props.hungry
+ * 
+ */
 const BallStatusBar = props =>
   <View style={style.container}>
     

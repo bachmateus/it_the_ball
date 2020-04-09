@@ -1,6 +1,15 @@
 import React from 'react';
-import { Animated, Text, StyleSheet, View } from 'react-native';
+import { Animated, StyleSheet, View } from 'react-native';
 
+/**
+ * Dumb component that show the main character of the game the ball
+ * 
+ * @param {Object} props.ballStyle the style that represent the size of the ball. It change when the ball gets old
+ * @param {Object} props.styleRotate the style that let the ball rotate itself
+ * @param {Object} props.eyeStyle the style that represent the size of the ball's eyes.
+ * 
+ * @returns {Component}
+ */
 const TheBall = props => 
   <Animated.View style={[styles.circulo, props.ballStyle, props.styleRotate]}> 
     <View style={[styles.eyeContainer, {marginTop: (props.age + 1) * 10}]}>
